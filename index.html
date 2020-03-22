@@ -6,15 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="./style.css">
+    
     <title>Coding-Quiz</title>
 </head>
-
 <body>
     <!-- highscores & time: -->
-    <ul class="nav nav-pills nav-justified">
+    <ul id="navBar" class="nav nav-pills nav-justified">
         <li class="nav-item">
-            <a class="nav-link" href="#">View Highscores!</a>
+            <a id="viewHighscores" class="nav-link" href="#">View Highscores!</a>
         </li>
         <li class="nav-item">
             <a class="" href="#"></a>
@@ -31,11 +30,14 @@
     <div id="introContainer" class="container pt-5 mt-5">
         <!-- View title -->
         <div class="row justify-content-center">
-            <h1>Coding Quiz!</h1>
+            <h1>Coding Quiz</h1>
         </div>
+        <br>
         <!-- info -->
         <div class="row justify-content-center">
-            <h3>Welcome! Test your knowledge</h3>
+            <h4>Test your knowledge of Coding in 60 seconds!</h4>
+            <h4>Race to the finish by selecting correct answers.</h4>
+            <h4>A wrong answer will subtract 10 seconds.</h4>
         </div>
         <!-- start button -->
         <div class="row justify-content-center pt-3">
@@ -58,12 +60,6 @@
             <button type="button" class=" btn btn-primary btn-lg mx-3"></button>
             <button type="button" class=" btn btn-primary btn-lg mx-3"></button>
         </div>
-        <!-- row spacer -->
-        <div class="row py-4"></div>
-        <!-- next button -->
-        <div class="row justify-content-center pt-3">
-            <button id="nextButton" type="button" class="btn btn-primary btn-lg">Next</button>
-        </div>
     </div>
 
     <!-- Highscores Content -->
@@ -74,14 +70,32 @@
         </div>
         <!-- info -->
         <div class="row justify-content-center">
-            <h3></h3>
+            <h4></h4>
         </div>
         <!-- restart button -->
         <div class="row justify-content-center pt-3">
             <button id="restartButton" type="button" class="btn btn-primary btn-lg">Restart</button>
         </div>
     </div>
-    
+
+    <!-- All Done Content -->
+    <div id="allDoneContainer" class="container pt-5 mt-5 d-none">
+        <!-- View title -->
+        <div class="row justify-content-center">
+            <h1>All Done!</h1>
+        </div>
+        <!-- form -->
+        <form id="highscoreForm">
+            <div class="form-group">
+                <label for="Name">Enter Name:</label>
+                <input type="text" class="form-control" id="userName">
+            </div>
+            <div class="row justify-content-center pt-3">
+            <button id="submitName" type="submit" class="btn btn-primary btn-lg">Submit</button>
+            </div>
+        </form>
+    </div>
+
     <script src="./script.js"></script>
 </body>
 

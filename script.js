@@ -8,20 +8,41 @@ var nextButton = document.getElementById('nextButton');
 var highscoresContainer = document.getElementById('highscores');
 var restartButton = document.getElementById('restartButton');
 var time = document.getElementById('time');
-var optionButton = document.querySelector('.options');
+var viewHighscores = document.getElementById('viewHighscores');
+var allDoneContainer = document.getElementById('allDoneContainer');
+var userName = document.getElementById('userName');
+var submitName = document.getElementById('submitName');
+var navBar = document.getElementById('navBar');
+
 // time
 var minute = 60;
+
 // Score
-var score = 0;
+var score;
+
+// Name
+var nameSubmitted;
+
 
 // Shuffled questions
 var shuffledQuestions, currentQuestionIndex;
 
 // Event Listener for elements
 startButton.addEventListener('click', startGame);
-nextButton.addEventListener('click', () => {
-    currentQuestionIndex++;
-    setNextQuestion();
+restartButton.addEventListener('click', () => {
+    location.reload();
+});
+viewHighscores.addEventListener('click', () => {
+    introContainer.classList.add('d-none');
+    showHighScores();
+});
+
+//when highscore is submitted
+submitName.addEventListener('click', (event) => {
+    event.preventDefault();
+    nameSubmitted = userName.value.trim();
+    showHighScores();
+    
 });
 
 
@@ -87,7 +108,7 @@ function setNextQuestion () {
 // display question
 function showQuestion (question) {
     if(question === undefined){
-        showHighScores();
+        allDone();
         return;
     } else 
     questionElement.innerText = question.question;
@@ -110,25 +131,28 @@ function answerSelected (event) {
 
     if(selectedButton === undefined){
         minute = minute - 10;
+    } else if (selectedButton === true){
+        score++;
     }
-
-    console.log(selectedButton);
+    currentQuestionIndex++;
+    setNextQuestion();
+    //console.log(selectedButton);
 }
-
-optionButton.addEventListener('click',(event) => { if (event.target.dataset.correct === undefined){
-    minute = minute - 10;
-}
-});
 
 //show high scores
 function showHighScores () {
-    console.log('show highscores');
+    allDoneContainer.classList.add("d-none");
     questionContainer.classList.add("d-none");
     highscoresContainer.classList.remove('d-none');
-
+    navBar.classList.add('d-none');
 }
 
-
+//all Done
+function allDone () {
+    clearInterval(interval);
+    allDoneContainer.classList.remove("d-none");
+    questionContainer.classList.add("d-none");
+}
 
 function startTimer(){
     interval = setInterval(function() {
@@ -140,7 +164,7 @@ function startTimer(){
 function renderTime(){
     if (minute <= 0){
         clearInterval(interval);
+        allDone();
     }
     time.innerHTML= minute;
 }
-//console.log(minute);
