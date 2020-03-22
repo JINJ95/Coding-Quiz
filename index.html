@@ -23,26 +23,65 @@
             <a class="" href="#"></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1"><span>Time:</span></a>
+            <a class="nav-link disabled" href="#" tabindex="-1"><span>Time: </span><span id="time"></span></a>
         </li>
     </ul>
 
-    <!-- Content -->
-    <div class="container pt-5 mt-5"></div>
-    <!-- View title -->
+    <!-- Intro Content -->
+    <div id="introContainer" class="container pt-5 mt-5">
+        <!-- View title -->
         <div class="row justify-content-center">
             <h1>Coding Quiz!</h1>
         </div>
-    <!-- info -->
+        <!-- info -->
         <div class="row justify-content-center">
             <h3>Welcome! Test your knowledge</h3>
         </div>
-    <!-- start button -->
+        <!-- start button -->
         <div class="row justify-content-center pt-3">
-            <button type="button" class="btn btn-primary btn-lg">Start</button>
+            <button id="startButton" type="button" class="btn btn-primary btn-lg">Start</button>
         </div>
     </div>
 
+    <!-- Question Content -->
+    <div id="questionContainer" class="container pt-5 mt-5 d-none">
+        <!-- View Question -->
+        <div class="row justify-content-center">
+            <h1 id="question">Question</h1>
+        </div>
+        <!-- row spacer -->
+        <div class="row py-4"></div>
+        <!-- Answer buttons -->
+        <div id='answerButtons' class="row justify-content-center">
+            <button type="button" class=" btn btn-primary btn-lg mx-3"></button>
+            <button type="button" class=" btn btn-primary btn-lg mx-3"></button>
+            <button type="button" class=" btn btn-primary btn-lg mx-3"></button>
+            <button type="button" class=" btn btn-primary btn-lg mx-3"></button>
+        </div>
+        <!-- row spacer -->
+        <div class="row py-4"></div>
+        <!-- next button -->
+        <div class="row justify-content-center pt-3">
+            <button id="nextButton" type="button" class="btn btn-primary btn-lg">Next</button>
+        </div>
+    </div>
+
+    <!-- Highscores Content -->
+    <div id="highscores" class="container pt-5 mt-5 d-none">
+        <!-- View title -->
+        <div class="row justify-content-center">
+            <h1>Highscores!</h1>
+        </div>
+        <!-- info -->
+        <div class="row justify-content-center">
+            <h3></h3>
+        </div>
+        <!-- restart button -->
+        <div class="row justify-content-center pt-3">
+            <button id="restartButton" type="button" class="btn btn-primary btn-lg">Restart</button>
+        </div>
+    </div>
+    
     <script src="./script.js"></script>
 </body>
 
