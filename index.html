@@ -16,13 +16,13 @@
             <a id="viewHighscores" class="nav-link" href="#">View Highscores!</a>
         </li>
         <li class="nav-item">
-            <a class="" href="#"></a>
+            <a id="correctDisplay" class="nav-link disabled d-none" href="#" tabindex="-1"><span>Correct: </span><span id="correct"></span></a>
         </li>
         <li class="nav-item">
-            <a class="" href="#"></a>
+            <a id="incorrectDisplay" class="nav-link disabled d-none" href="#" tabindex="-1"><span>Incorrect: </span><span id="incorrect"></span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1"><span>Time: </span><span id="time"></span></a>
+            <a id="timeDisplay" class="nav-link disabled d-none" href="#" tabindex="-1"><span>Time: </span><span id="time"></span></a>
         </li>
     </ul>
 
@@ -35,9 +35,8 @@
         <br>
         <!-- info -->
         <div class="row justify-content-center">
-            <h4>Test your knowledge of Coding in 60 seconds!</h4>
-            <h4>Race to the finish by selecting correct answers.</h4>
-            <h4>A wrong answer will subtract 10 seconds.</h4>
+            <h4>Test your knowledge of Coding in 60 seconds! </h4>
+            <h4>Select correct answers! A wrong answer will subtract 10 seconds.</h4>
         </div>
         <!-- start button -->
         <div class="row justify-content-center pt-3">
@@ -70,7 +69,7 @@
         </div>
         <!-- info -->
         <div class="row justify-content-center">
-            <h4></h4>
+            <ol id="scoreList"></ol>
         </div>
         <!-- restart button -->
         <div class="row justify-content-center pt-3">

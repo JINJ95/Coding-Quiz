@@ -13,16 +13,22 @@ var allDoneContainer = document.getElementById('allDoneContainer');
 var userName = document.getElementById('userName');
 var submitName = document.getElementById('submitName');
 var navBar = document.getElementById('navBar');
+var scoreList = document.getElementById('scoreList');
+var questionsCorrect = document.getElementById('correct');
+var questionsIncorrect = document.getElementById('incorrect');
+var correctDisplay = document.getElementById('correctDisplay');
+var incorrectDisplay = document.getElementById('incorrectDisplay');
+var timeDisplay = document.getElementById('timeDisplay');
 
 // time
 var minute = 60;
 
 // Score
-var score;
+var score = 0;
+var incorrect = 0;
 
-// Name
-var nameSubmitted;
-
+// highscores
+var highscores = [];
 
 // Shuffled questions
 var shuffledQuestions, currentQuestionIndex;
@@ -40,54 +46,75 @@ viewHighscores.addEventListener('click', () => {
 //when highscore is submitted
 submitName.addEventListener('click', (event) => {
     event.preventDefault();
-    nameSubmitted = userName.value.trim();
+    var nameSubmitted = userName.value.trim();
+    highscores.push(nameSubmitted);
     showHighScores();
-    
+
 });
 
+function renderHighscores() {
+    // Clear scoreList 
+    scoreList.innerHTML = "";
+
+    // Render a new li for each todo
+    for (var i = 0; i < highscores.length; i++) {
+        var scores = highscores[i];
+
+        var li = document.createElement("li");
+        li.textContent = highscores + " ----- " + "Correct: " + score + " ----- " + "Incorrect: " + incorrect + " ----- " +"Seconds Left: " + minute;
+        scoreList.appendChild(li);
+    }
+}
+
+// Stringify and set highscores key in localStorage
+function storeHighscores() {
+    localStorage.setItem("highscores", JSON.stringify(highscores));
+}
+
+// get stored scores from local storage
 
 //list of questions
 var questions = [
     {
         question: 'What is not a common data type?',
         answers: [
-            {text: 'Integer', correct: false },
-            {text: 'Boolean', correct: false },
-            {text: 'String', correct: false },
-            {text: 'Pig', correct: true }
+            { text: 'Integer', correct: false },
+            { text: 'Boolean', correct: false },
+            { text: 'String', correct: false },
+            { text: 'Pig', correct: true }
         ]
     },
     {
         question: 'HTML is a programming language?',
         answers: [
-            {text: 'False', correct: false },
-            {text: 'True', correct: true },
+            { text: 'False', correct: false },
+            { text: 'True', correct: true },
         ]
     },
     {
         question: 'What element is used for the largest heading?',
         answers: [
-            {text: '<h1>', correct: true },
-            {text: '<h2>', correct: false },
-            {text: '<h3>', correct: false },
-            {text: '<h4>', correct: false }
+            { text: '<h1>', correct: true },
+            { text: '<h2>', correct: false },
+            { text: '<h3>', correct: false },
+            { text: '<h4>', correct: false }
         ]
     },
 ]
 
-//set timer 
-
-//keep track of correct and wrong answers
 
 // Start game / Start timer / hide intro & start button / Display question and Answer buttons
 function startGame() {
-startTimer();
-introContainer.classList.add('d-none');
-questionContainer.classList.remove('d-none');
-//shuffle questions
-shuffledQuestions = questions.sort(() => Math.random() - .5);
-currentQuestionIndex = 0;
-setNextQuestion();
+    startTimer();
+    introContainer.classList.add('d-none');
+    questionContainer.classList.remove('d-none');
+    //shuffle questions
+    shuffledQuestions = questions.sort(() => Math.random() - .5);
+    currentQuestionIndex = 0;
+    setNextQuestion();
+    correctDisplay.classList.remove('d-none');
+    incorrectDisplay.classList.remove('d-none');
+    timeDisplay.classList.remove('d-none');
 }
 
 //reset form, questions, buttons
@@ -99,24 +126,24 @@ function resetState() {
 }
 
 // Set next question and answers
-function setNextQuestion () { 
+function setNextQuestion() {
     resetState();
     
     showQuestion(shuffledQuestions[currentQuestionIndex]);
 }
 
 // display question
-function showQuestion (question) {
-    if(question === undefined){
+function showQuestion(question) {
+    if (question === undefined) {
         allDone();
         return;
-    } else 
+    } else
     questionElement.innerText = question.question;
     question.answers.forEach(answer => {
         var button = document.createElement('button');
         button.innerText = answer.text;
-        button.classList.add('btn','btn-primary','btn-lg', 'mx-3');
-//check if answer is correct and set dataset to correct
+        button.classList.add('btn', 'btn-primary', 'btn-lg', 'mx-3');
+        //check if answer is correct and set dataset to correct
         if (answer.correct) {
             button.dataset.correct = answer.correct
         }
@@ -125,14 +152,17 @@ function showQuestion (question) {
     })
 }
 
-// when answer is selected add to score
-function answerSelected (event) {
+// when answer is selected
+function answerSelected(event) {
+    //keep track of correct and wrong answers
     var selectedButton = event.target.dataset.correct;
-
-    if(selectedButton === undefined){
+    if (selectedButton === undefined) {
+        incorrect++;
+        questionsIncorrect.innerHTML = incorrect;
         minute = minute - 10;
-    } else if (selectedButton === true){
+    } else {
         score++;
+        questionsCorrect.innerText = score;
     }
     currentQuestionIndex++;
     setNextQuestion();
@@ -140,7 +170,9 @@ function answerSelected (event) {
 }
 
 //show high scores
-function showHighScores () {
+function showHighScores() {
+    storeHighscores();
+    renderHighscores();
     allDoneContainer.classList.add("d-none");
     questionContainer.classList.add("d-none");
     highscoresContainer.classList.remove('d-none');
@@ -148,23 +180,24 @@ function showHighScores () {
 }
 
 //all Done
-function allDone () {
+function allDone() {
     clearInterval(interval);
     allDoneContainer.classList.remove("d-none");
     questionContainer.classList.add("d-none");
 }
 
-function startTimer(){
-    interval = setInterval(function() {
+//set timer 
+function startTimer() {
+    interval = setInterval(function () {
         minute--;
         renderTime();
     }, 1000);
 }
 
-function renderTime(){
-    if (minute <= 0){
+function renderTime() {
+    if (minute <= 0) {
         clearInterval(interval);
         allDone();
     }
-    time.innerHTML= minute;
+    time.innerHTML = minute;
 }
