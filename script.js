@@ -40,28 +40,39 @@ restartButton.addEventListener('click', () => {
 });
 viewHighscores.addEventListener('click', () => {
     introContainer.classList.add('d-none');
+    init();
+    renderHighscores();
     showHighScores();
 });
+
+
 
 //when highscore is submitted
 submitName.addEventListener('click', (event) => {
     event.preventDefault();
     var nameSubmitted = userName.value.trim();
-    highscores.push(nameSubmitted);
+    highscores.push(nameSubmitted + " ----- " + "Correct: " + score + " ----- " + "Incorrect: " + incorrect + " ----- " +"Seconds Left: " + minute);
+    storeHighscores();
+    renderHighscores();
     showHighScores();
-
 });
 
 function renderHighscores() {
     // Clear scoreList 
     scoreList.innerHTML = "";
 
-    // Render a new li for each todo
+    //if highscores is empty 
+    if (highscores === null) {
+        scoreList.innerHTML = "Play to set a Highscore!"
+        return;
+    }
+
+    // Render a new li for each highscore
     for (var i = 0; i < highscores.length; i++) {
         var scores = highscores[i];
 
         var li = document.createElement("li");
-        li.textContent = highscores + " ----- " + "Correct: " + score + " ----- " + "Incorrect: " + incorrect + " ----- " +"Seconds Left: " + minute;
+        li.textContent = highscores
         scoreList.appendChild(li);
     }
 }
@@ -72,6 +83,16 @@ function storeHighscores() {
 }
 
 // get stored scores from local storage
+function init() {
+    var storedHighscores = JSON.parse(localStorage.getItem("highscores"));
+
+// if highscores were retrieved from local Storage, update the highscores array to it
+    if (highscores !== null) {
+        highscores = storedHighscores;
+    }
+// render todos to the DOM
+    renderHighscores();
+}
 
 //list of questions
 var questions = [
@@ -100,6 +121,70 @@ var questions = [
             { text: '<h4>', correct: false }
         ]
     },
+    {
+        question: 'What element is required to begin HTML?',
+        answers: [
+            { text: '<html lang="en"></html>', correct: true },
+            { text: '<head></head>', correct: false },
+            { text: '<body></body>', correct: false },
+            { text: '<div></div>', correct: false }
+        ]
+    },
+    {
+        question: 'What element is used to style within HTML?',
+        answers: [
+            { text: '<html lang="en"></html>', correct: false },
+            { text: '<head></head>', correct: false },
+            { text: '<body></body>', correct: false },
+            { text: '<style></style>', correct: true }
+        ]
+    },
+    {
+        question: 'Within what element do you write JavaScript?',
+        answers: [
+            { text: '<script></script>', correct: true },
+            { text: '<head></head>', correct: false },
+            { text: '<body></body>', correct: false },
+            { text: '<style></style>', correct: false }
+        ]
+    },
+    {
+        question: 'What variable contains an Object',
+        answers: [
+            { text: 'var object = {}', correct: true },
+            { text: 'var object = []', correct: false },
+            { text: 'var object = object', correct: false },
+            { text: 'var object = true', correct: false }
+        ]
+    },
+    {
+        question: 'What variable contains a Boolean',
+        answers: [
+            { text: 'var object = {}', correct: false },
+            { text: 'var object = []', correct: false },
+            { text: 'var object = true', correct: true },
+            { text: 'var object = false', correct: false }
+        ]
+    },
+    {
+        question: 'What variable contains an Array',
+        answers: [
+            { text: 'var object = {}', correct: false },
+            { text: 'var object = []', correct: true },
+            { text: 'var object = object', correct: false },
+            { text: 'var object = true', correct: false }
+        ]
+    },
+    {
+        question: 'What variable contains a String',
+        answers: [
+            { text: 'var object = {}', correct: false },
+            { text: 'var object = []', correct: false },
+            { text: 'var object = object', correct: true },
+            { text: 'var object = true', correct: false }
+        ]
+    },
+    
 ]
 
 
@@ -172,6 +257,7 @@ function answerSelected(event) {
 //show high scores
 function showHighScores() {
     storeHighscores();
+    init();
     renderHighscores();
     allDoneContainer.classList.add("d-none");
     questionContainer.classList.add("d-none");
