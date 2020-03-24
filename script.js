@@ -19,6 +19,7 @@ var questionsIncorrect = document.getElementById('incorrect');
 var correctDisplay = document.getElementById('correctDisplay');
 var incorrectDisplay = document.getElementById('incorrectDisplay');
 var timeDisplay = document.getElementById('timeDisplay');
+var clearButton = document.getElementById('clearButton');
 
 // time
 var minute = 60;
@@ -44,7 +45,11 @@ viewHighscores.addEventListener('click', () => {
     renderHighscores();
     showHighScores();
 });
-
+clearButton.addEventListener('click', function () {
+    localStorage.clear();
+    init();
+    renderHighscores();
+});
 
 
 //when highscore is submitted
@@ -180,7 +185,7 @@ var questions = [
         answers: [
             { text: 'var object = {}', correct: false },
             { text: 'var object = []', correct: false },
-            { text: 'var object = object', correct: true },
+            { text: 'var object = "object"', correct: true },
             { text: 'var object = true', correct: false }
         ]
     },
